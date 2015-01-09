@@ -1,4 +1,8 @@
 #lubridate packages is required 
+packagesrequired <- c("lubridate")
+newpackages <- packagesrequired[!(packagesrequired %in% installed.packages()[,"Package"])]
+if(length(newpackages)) install.packages(newpackages)
+
 library(lubridate)
 
 #download file from internet
@@ -6,6 +10,10 @@ if(file.exists("household_power_consumption.txt") == FALSE){
     download.file("https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip", destfile="Dataset.zip", method="curl")
     #extract the archive
     unzip("Dataset.zip")
+}
+#create folder result
+if(file.exists("result/") == FALSE){
+    dir.create("result")
 }
 #read the dataset (missing values are coded as ?)
 data<-read.csv("household_power_consumption.txt", header=TRUE, sep=";", na.strings="?")
